@@ -1,14 +1,21 @@
 require 'csv'
+require_relative '../app/models/politician'
 
 class SunlightLegislatorsImporter
-  def self.import(filename)
+  def self.import(filename=File.dirname(__FILE__) + "/../db/data/legislators.csv")
     csv = CSV.new(File.open(filename), :headers => true)
+    ignore_fields = ["middlename","name_suffix","nickname","congress_office","bioguide_id","votesmart_id","fec_id","govtrack_id","crp_id","congresspedia_url","youtube_url","facebook_id","official_rss","senate_class"]
+
     csv.each do |row|
+      hash = {}
       row.each do |field, value|
-        # TODO: begin
-        raise NotImplementedError, "TODO: figure out what to do with this row and do it!"
-        # TODO: end
+
+  # hash = { :firstname => ? }
+        hash[field] = value unless ignore_fields.include?(field)
+          # raise NotImplementedError, "TODO: figure out what to do with this row and do it!"
+          # TODO: end
       end
+      Politician.create(hash)
     end
   end
 end
