@@ -53,46 +53,46 @@ require_relative '../app/models/politician'
 #____________________QUESTION 3______________________
 
 
-politician = Politician.where('in_office = ?', "1")
+# politician = Politician.where('in_office = ?', "1")
 
 
-distinct_state = politician.select(:state).distinct
+# distinct_state = politician.select(:state).distinct
 
-# senator = Politician.select("state").where("title = 'Sen'").where("in_office = '1'")
+# poli_array = []
+# total = 0
+# distinct_state.each do |p|
+#   last_total = total
+#   senator = politician.where("title = ? AND state = ?", "Sen", p.state)
+#   rep = politician.where("title = ? AND state = ?", "Rep", p.state)
+#   poli_array << [p.state, rep.count + senator.count]
+# end
 
-# senator.each do |e|
-#   puts "#{e.state} count: #{e.count}
-poli_array = []
-total = 0
-distinct_state.each do |p|
-  last_total = total
-  senator = politician.where("title = ? AND state = ?", "Sen", p.state)
-  rep = politician.where("title = ? AND state = ?", "Rep", p.state)
-  poli_array << [p.state, rep.count + senator.count]
+# new_array = poli_array.sort { |x, y| y[1] <=> x[1]}
 
-  # puts "#{p.state}: #{senator.count} Senator\(s\), #{rep.count} Representative\(s\)"
-  # total = senator.count + rep.count
-
-  # if poli_array.length == 0
-  #   poli_array << p.state
-  # else
-  #   if total >= last_total
-  #     poli_array << p.state
-  #   else
-  #     poli_array.insert(0, p.state)
-  #   end
-  # end
-end
-
-new_array = poli_array.sort { |x, y| y[1] <=> x[1]}
-
-new_array.each do |p|
-  senator = politician.where("title = ? AND state = ?", "Sen", p[0])
-  rep = politician.where("title = ? AND state = ?", "Rep", p[0])
-  puts "#{p[0]}: #{senator.count} Senator\(s\), #{rep.count} Representative\(s\)"
-end
-# poli_array.sort
+# new_array.each do |p|
+#   senator = politician.where("title = ? AND state = ?", "Sen", p[0])
+#   rep = politician.where("title = ? AND state = ?", "Rep", p[0])
+#   puts "#{p[0]}: #{senator.count} Senator\(s\), #{rep.count} Representative\(s\)"
+# end
 
 
-# SELECT state, (SELECT num_of_sen), (num_of_rep), total_rep FROM politician WHERE
+
+#____________________QUESTION 4______________________
+
+# politician = Politician.all
+# senator = politician.where("title = ?", "Sen")
+# rep = politician.where("title = ?", "Rep")
+
+# puts "Senators: #{senator.count}"
+# puts "Representatives: #{rep.count}"
+
+
+#____________________QUESTION 5______________________
+
+politician = Politician.where('in_office = ?', 0)
+p "Before: #{politician.count}"
+politician.delete_all
+
+p "After: #{politician.count}"
+
 
